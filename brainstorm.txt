@@ -1,0 +1,21 @@
+Health :: 
+    Data handling -- patients -- equipment -- track record
+    Data Analysis -- paitients & docs -- cost tracking // salary
+    Medicine -- handling // cost 
+    Medicine -- Emergency situations -- Educate -- Awareness
+
+
+Education::
+    Data handling -- students //teachers // saman -- track record
+
+
+:: GAME ::
+
+Educating about Health -- 
+
+
+                0
+
+
+
+                                    
