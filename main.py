@@ -15,8 +15,9 @@ sun_image = py.image.load("Resources/sun.png")
 
 
 #Time/Score
-font_time = py.font.Font('freesansbold.ttf', 48)
+font_time = py.font.Font('Resources/newfont.otf', 48)
 def show_time():
+    
     score = font_time.render(str(int(time.time()-current_time)), True, (255, 255, 255))
     WIN.blit(score, (15, 15))
 
