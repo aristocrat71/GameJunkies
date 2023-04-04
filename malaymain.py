@@ -3,7 +3,7 @@ import random
 import time
 #current_time = time.time()
 ##################################        DAY 2          #############################
-
+#~~~~~~~~~~~~~~~~~~~~~~~~~EDITING INFO SCREEN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 py.init()
 
 #Game Window
@@ -40,17 +40,25 @@ def splash_screen():
 #InfoScreen
 font_info = py.font.Font('Resources/newfont.otf', 36)
 font_info2 = py.font.Font('Resources/newfont.otf', 28)
+water = py.image.load("Resources/water.png")
+watermelon = py.image.load("Resources/watermelon.png")
+burger = py.image.load("Resources/hamburger.png")
+cola = py.image.load("Resources/cola.png")
 def info_screen():
-    infomesgstrings= ["You are roaming a desert", "You must survive as long as you can", "Stay Hydrated to Stay Alive", "Waterbottle", "Coke", "Burger", "Watermelon"]
+    infomesgstrings= ["You are roaming a desert", "You must survive as long as you can", "Stay Hydrated to Stay Alive", ": Waterbottle", ": Coke", ": Burger", ": Watermelon"]
     infomsg = [font_info.render(infomesgstrings[0], True, (255, 255, 255)), font_info.render(infomesgstrings[1], True, (255, 255, 255)), font_info.render(infomesgstrings[2], True, (255, 255, 255)), font_info2.render(infomesgstrings[3], True, (255, 255, 255)), font_info2.render(infomesgstrings[4], True, (255, 255, 255)), font_info2.render(infomesgstrings[5], True, (255, 255, 255)), font_info2.render(infomesgstrings[6], True, (255, 255, 255)), font_splash_credit.render("Press Enter to Play :)", True, (255, 255, 255))]
 
     WIN.blit(infomsg[0], (50, 100))
     WIN.blit(infomsg[1], (50, 140))
     WIN.blit(infomsg[2], (50, 180))
-    WIN.blit(infomsg[3], (50, 250))
-    WIN.blit(infomsg[4], (50, 280))
-    WIN.blit(infomsg[5], (50, 310))
-    WIN.blit(infomsg[6], (50, 340))
+    WIN.blit(water,(300, 250))
+    WIN.blit(infomsg[3], (340, 250))
+    WIN.blit(cola,(300, 300))
+    WIN.blit(infomsg[4], (340, 300))
+    WIN.blit(burger,(300, 350))
+    WIN.blit(infomsg[5], (340, 350))
+    WIN.blit(watermelon,(300, 400))
+    WIN.blit(infomsg[6], (340, 340))
     WIN.blit(infomsg[7], (250, 520))
 
 
@@ -79,13 +87,11 @@ def show_time():
 
 #Player
 class Player(py.sprite.Sprite):
-    def __init__(self, picturepath):
+    def __init__(self):
         super().__init__()
         self.pos_X = 375
         self.pos_Y = 510
         self.vel = 0
-        self.image = py.image.load(picturepath)
-        self.rect = self.image.get_rect()
         
     def update(self,vel,picture_path):
         self.image = py.image.load(picture_path)
@@ -101,7 +107,7 @@ class Player(py.sprite.Sprite):
 vel_Player = 0
 Player_state = 1
 Players_picmap = ["Resources/manleft.png","Resources/man.png", "Resources/manright.png"]
-PlayerCenter = Player("Resources/man.png")
+PlayerCenter = Player()
 Player_group = py.sprite.Group
 Player_group.add(PlayerCenter)
 
@@ -112,18 +118,14 @@ class Helpers(py.sprite.Sprite):
         self.image = py.image.load(picturepath)
         self.pos_X = random.randint(10,726)
         self.pos_Y = random.randint(5,50)
-        self.vel = random.randint(1, 3)
-        self.rect = self.image.get_rect()
+        self.vel = random.randint(1, 4)
     
     def update(self):
+        self.rect = self.image.get_rect()
         self.pos_Y += self.vel
-        self.rect.center = [self.pos_X, self.pos_Y]
         WIN.blit(self.image, (self.pos_X, self.pos_Y))
         if self.pos_Y > 530:
             return True
-
-    def collide(self, Playerrect):
-        return self.rect.colliderect(Playerrect)
 
 helpers = [Helpers("Resources/water.png"), Helpers("Resources/watermelon.png")]
 
@@ -135,20 +137,13 @@ class Enemy(py.sprite.Sprite):
         self.pos_X = random.randint(10,726)
         self.pos_Y = random.randint(5,50)
         self.vel = random.randint(1, 4)
-        self.rect = self.image.get_rect()
     
     def update(self):
+        self.rect = self.image.get_rect()
         self.pos_Y += self.vel
-        self.rect.center = [self.pos_X, self.pos_Y]
         WIN.blit(self.image, (self.pos_X, self.pos_Y))
         if self.pos_Y > 530:
             return True
-
-    def collide(self, Playerrect):
-        return self.rect.colliderect(Playerrect)
-            # self.pos_X = random.randint(10,726)
-            # self.pos_Y = random.randint(5,50)
-            # self.vel = random.randint(1, 3)
 
 enemies = [Enemy("Resources/cola.png"), Enemy("Resources/hamburger.png")]
 
@@ -215,25 +210,25 @@ while running:
         WIN.blit(background_image,(0,0))
         WIN.blit(sun_image,(650, -80))
 
-        if enemies[0].update() or enemies[0].collide(PlayerCenter.rect):
+        if enemies[0].update():
             enemies[0].pos_X = random.randint(10,726)
             enemies[0].pos_Y = random.randint(5,50)
-            enemies[0].vel = random.randint(1, 3)
+            enemies[0].vel = random.randint(1, 4)
 
-        if enemies[1].update() or enemies[1].collide(PlayerCenter.rect):
+        if enemies[1].update():
             enemies[1].pos_X = random.randint(10,726)
             enemies[1].pos_Y = random.randint(5,50)
-            enemies[1].vel = random.randint(1, 3)
+            enemies[1].vel = random.randint(1, 4)
 
-        if helpers[0].update() or helpers[0].collide(PlayerCenter.rect):
+        if helpers[0].update():
             helpers[0].pos_X = random.randint(10,726)
             helpers[0].pos_Y = random.randint(5,50)
-            helpers[0].vel = random.randint(1, 3)
+            helpers[0].vel = random.randint(1, 4)
 
-        if helpers[1].update() or helpers[1].collide(PlayerCenter.rect):
+        if helpers[1].update():
             helpers[1].pos_X = random.randint(10,726)
             helpers[1].pos_Y = random.randint(5,50)
-            helpers[1].vel = random.randint(1, 3)
+            helpers[1].vel = random.randint(1, 4)
         
         PlayerCenter.update(vel_Player, Players_picmap[Player_state])
         show_time()
