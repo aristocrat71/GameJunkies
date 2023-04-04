@@ -2,7 +2,6 @@ import pygame as py
 import random
 import time
 #current_time = time.time()
-
 ##################################        DAY 2          #############################
 
 py.init()
@@ -10,6 +9,9 @@ py.init()
 #Game Window
 WIN = py.display.set_mode((800,700))
 clock = py.time.Clock()
+py.display.set_caption("Hydration Hero")
+game_icon = py.image.load("Resources/water.png")
+py.display.set_icon(game_icon)
 
 #Game Screens
 is_splashscreen = True
@@ -55,11 +57,16 @@ def info_screen():
 #End Screen
 font_end = py.font.Font('Resources/newfont.otf', 90)
 font_end2 = py.font.Font('Resources/newfont.otf', 48)
+font_end3 = py.font.Font('Resources/newfont.otf', 36)
 def end_screen():
     endmsg = font_end.render("Game Over", True, (255, 255, 255))
-    WIN.blit(endmsg, (50, 101))
+    WIN.blit(endmsg, (50, 100))
     scoremsg = font_end2.render("Your score: "+str(final_score), True, (255, 255, 255))
-    WIN.blit(scoremsg, (400, 350))
+    WIN.blit(scoremsg, (400, 250))
+    retrymsg = font_end3.render("Press Enter to retry", True, (255, 255, 255))
+    WIN.blit(retrymsg, (250, 550))
+    gamequitmsg = font_end3.render("Press Esc to quit", True, (255, 255, 255))
+    WIN.blit(gamequitmsg, (250, 600))
 
 
 
@@ -125,11 +132,19 @@ while running:
                     break
 
                 if is_mainscreen == True:
-                    is_maincreen = False
+                    is_mainscreen = False
                     is_endscreen = True
                     final_score = int(time.time()-current_time)
                     break
 
+                if is_endscreen == True:
+                    is_endscreen = False
+                    is_infoscreen = True
+                    break
+        
+            if event.key == py.K_ESCAPE and is_endscreen == True:
+                running = False
+            
         if event.type == py.KEYUP:
             if event.key == py.K_RIGHT or event.key == py.K_LEFT:
                 Player_state = 1
