@@ -1,6 +1,22 @@
 KAAM KYA BACHA HAI
 
-2) Item Sprites
-3) ETC 4 GHNATE KA KAAM
-4) MAIN MENU
-5) END SCREEN
+2) Item Sprites = DONEDONEDONE
+3) ETC 4 GHNATE KA KAAM  DONEEEEEEEEEEEEE
+4) MAIN MENU  = DONE?
+5) END SCREEN  = DONE 
+
+
+DAY3 ka kaam?
+
+Movement refinement
+End Screen Facts
+Info screen Object Description
+Runtime info facts splash
+Describe healthbar somewhere
+MUSIC
+Object Velocity inc with time...?
+
+.
+.
+.
+.exe
