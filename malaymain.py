@@ -79,11 +79,13 @@ def show_time():
 
 #Player
 class Player(py.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, picturepath):
         super().__init__()
         self.pos_X = 375
         self.pos_Y = 510
         self.vel = 0
+        self.image = py.image.load(picturepath)
+        self.rect = self.image.get_rect()
         
     def update(self,vel,picture_path):
         self.image = py.image.load(picture_path)
@@ -99,7 +101,7 @@ class Player(py.sprite.Sprite):
 vel_Player = 0
 Player_state = 1
 Players_picmap = ["Resources/manleft.png","Resources/man.png", "Resources/manright.png"]
-PlayerCenter = Player()
+PlayerCenter = Player("Resources/man.png")
 Player_group = py.sprite.Group
 Player_group.add(PlayerCenter)
 
@@ -110,14 +112,18 @@ class Helpers(py.sprite.Sprite):
         self.image = py.image.load(picturepath)
         self.pos_X = random.randint(10,726)
         self.pos_Y = random.randint(5,50)
-        self.vel = random.randint(1, 4)
+        self.vel = random.randint(1, 3)
+        self.rect = self.image.get_rect()
     
     def update(self):
-        self.rect = self.image.get_rect()
         self.pos_Y += self.vel
+        self.rect.center = [self.pos_X, self.pos_Y]
         WIN.blit(self.image, (self.pos_X, self.pos_Y))
         if self.pos_Y > 530:
             return True
+
+    def collide(self, Playerrect):
+        return self.rect.colliderect(Playerrect)
 
 helpers = [Helpers("Resources/water.png"), Helpers("Resources/watermelon.png")]
 
@@ -129,13 +135,17 @@ class Enemy(py.sprite.Sprite):
         self.pos_X = random.randint(10,726)
         self.pos_Y = random.randint(5,50)
         self.vel = random.randint(1, 4)
+        self.rect = self.image.get_rect()
     
     def update(self):
-        self.rect = self.image.get_rect()
         self.pos_Y += self.vel
+        self.rect.center = [self.pos_X, self.pos_Y]
         WIN.blit(self.image, (self.pos_X, self.pos_Y))
         if self.pos_Y > 530:
             return True
+
+    def collide(self, Playerrect):
+        return self.rect.colliderect(Playerrect)
 
 enemies = [Enemy("Resources/cola.png"), Enemy("Resources/hamburger.png")]
 
@@ -202,25 +212,25 @@ while running:
         WIN.blit(background_image,(0,0))
         WIN.blit(sun_image,(650, -80))
 
-        if enemies[0].update():
+        if enemies[0].update() or enemies[0].collide(PlayerCenter.rect):
             enemies[0].pos_X = random.randint(10,726)
             enemies[0].pos_Y = random.randint(5,50)
-            enemies[0].vel = random.randint(1, 4)
+            enemies[0].vel = random.randint(1, 3)
 
-        if enemies[1].update():
+        if enemies[1].update() or enemies[1].collide(PlayerCenter.rect):
             enemies[1].pos_X = random.randint(10,726)
             enemies[1].pos_Y = random.randint(5,50)
-            enemies[1].vel = random.randint(1, 4)
+            enemies[1].vel = random.randint(1, 3)
 
-        if helpers[0].update():
+        if helpers[0].update() or helpers[0].collide(PlayerCenter.rect):
             helpers[0].pos_X = random.randint(10,726)
             helpers[0].pos_Y = random.randint(5,50)
-            helpers[0].vel = random.randint(1, 4)
+            helpers[0].vel = random.randint(1, 3)
 
-        if helpers[1].update():
+        if helpers[1].update() or helpers[1].collide(PlayerCenter.rect):
             helpers[1].pos_X = random.randint(10,726)
             helpers[1].pos_Y = random.randint(5,50)
-            helpers[1].vel = random.randint(1, 4)
+            helpers[1].vel = random.randint(1, 3)
         
         PlayerCenter.update(vel_Player, Players_picmap[Player_state])
         show_time()
