@@ -57,7 +57,7 @@ font_end = py.font.Font('Resources/newfont.otf', 90)
 font_end2 = py.font.Font('Resources/newfont.otf', 48)
 def end_screen():
     endmsg = font_end.render("Game Over", True, (255, 255, 255))
-    WIN.blit(endmsg, (50, 100))
+    WIN.blit(endmsg, (50, 101))
     scoremsg = font_end2.render("Your score: "+str(final_score), True, (255, 255, 255))
     WIN.blit(scoremsg, (400, 350))
 
