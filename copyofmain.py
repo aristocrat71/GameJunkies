@@ -3,6 +3,8 @@ import random
 import time
 current_time = time.time()
 
+##################################    0133    4/4/2023             #############################
+
 py.init()
 
 #Game Window
@@ -44,8 +46,12 @@ vel_Player = 0
 Player_state = 1
 Players_picmap = ["Resources/manleft.png","Resources/man.png", "Resources/manright.png"]
 PlayerCenter = Player()
+# PlayerLeft = Player("Resources/manleft.png")
+# PlayerRight = Player("Resources/manright.png")
 Player_group = py.sprite.Group
+# Player_group.add(PlayerLeft)
 Player_group.add(PlayerCenter)
+# Player_group.add(PlayerRight)
 
 #Game Looping
 running = True

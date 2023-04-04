@@ -1,21 +1,6 @@
-Health :: 
-    Data handling -- patients -- equipment -- track record
-    Data Analysis -- paitients & docs -- cost tracking // salary
-    Medicine -- handling // cost 
-    Medicine -- Emergency situations -- Educate -- Awareness
+KAAM KYA BACHA HAI
 
-
-Education::
-    Data handling -- students //teachers // saman -- track record
-
-
-:: GAME ::
-
-Educating about Health -- 
-
-
-                0
-
-
-
-                                    
+2) Item Sprites
+3) ETC 4 GHNATE KA KAAM
+4) MAIN MENU
+5) END SCREEN
