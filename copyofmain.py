@@ -79,11 +79,13 @@ def show_time():
 
 #Player
 class Player(py.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, picturepath):
         super().__init__()
         self.pos_X = 375
         self.pos_Y = 510
         self.vel = 0
+        self.image = py.image.load(picturepath)
+        self.rect = self.image.get_rect()
         
     def update(self,vel,picture_path):
         self.image = py.image.load(picture_path)
@@ -99,7 +101,7 @@ class Player(py.sprite.Sprite):
 vel_Player = 0
 Player_state = 1
 Players_picmap = ["Resources/manleft.png","Resources/man.png", "Resources/manright.png"]
-PlayerCenter = Player()
+PlayerCenter = Player("Resources/man.png")
 Player_group = py.sprite.Group
 Player_group.add(PlayerCenter)
 
@@ -144,9 +146,6 @@ class Enemy(py.sprite.Sprite):
 
     def collide(self, Playerrect):
         return self.rect.colliderect(Playerrect)
-            # self.pos_X = random.randint(10,726)
-            # self.pos_Y = random.randint(5,50)
-            # self.vel = random.randint(1, 3)
 
 enemies = [Enemy("Resources/cola.png"), Enemy("Resources/hamburger.png")]
 
