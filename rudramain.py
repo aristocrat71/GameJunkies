@@ -2,8 +2,10 @@ import pygame as py
 import random
 import time
 #current_time = time.time()
-##################################        DAY 2          #############################
-#~~~~~~~~~~~~~~~~~~~~~~~~~EDITING INFO SCREEN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+##################################        DAY 3          #############################
+
 py.init()
 
 #Game Window
@@ -28,7 +30,7 @@ sun_image = py.image.load("Resources/sun.png")
 
 #SplashScreen
 font_splash_title = py.font.Font('Resources/newfont.otf', 90)
-font_splash_credit = py.font.Font('Resources/newfont.otf', 35)
+font_splash_credit = py.font.Font('Resources/newfont.otf', 36)
 def splash_screen():
     titlemsg1 = font_splash_title.render("Hydration Hero", True, (255, 255, 255))
     WIN.blit(titlemsg1, (50, 100))
@@ -38,28 +40,35 @@ def splash_screen():
     WIN.blit(titlemsg3, (250, 520))
 
 #InfoScreen
-font_info = py.font.Font('Resources/newfont.otf', 36)
-font_info2 = py.font.Font('Resources/newfont.otf', 28)
+
+font_info = py.font.Font('Resources/newfont.otf', 50)
+font_info2 = py.font.Font('Resources/newfont.otf', 30)
 water = py.image.load("Resources/water.png")
 watermelon = py.image.load("Resources/watermelon.png")
 burger = py.image.load("Resources/hamburger.png")
 cola = py.image.load("Resources/cola.png")
 def info_screen():
-    infomesgstrings= ["You are roaming a desert", "You must survive as long as you can", "Stay Hydrated to Stay Alive", ": Waterbottle", ": Coke", ": Burger", ": Watermelon"]
-    infomsg = [font_info.render(infomesgstrings[0], True, (255, 255, 255)), font_info.render(infomesgstrings[1], True, (255, 255, 255)), font_info.render(infomesgstrings[2], True, (255, 255, 255)), font_info2.render(infomesgstrings[3], True, (255, 255, 255)), font_info2.render(infomesgstrings[4], True, (255, 255, 255)), font_info2.render(infomesgstrings[5], True, (255, 255, 255)), font_info2.render(infomesgstrings[6], True, (255, 255, 255)), font_splash_credit.render("Press Enter to Play :)", True, (255, 255, 255))]
+    # infomesgstrings= ["You are roaming a desert", "You must survive as long as you can", "Stay Hydrated to Stay Alive", ": Waterbottle", ": Coke", ": Burger", ": Watermelon"]
+    infomesgstrings= ["You are roaming a desert", "You must survive as long as you can", "Press left right arrow to move", "---Jump ?---", "Collecting: ", "Helps you stay hydrated", "Will harm (dehydrate) your body", "Stay hydrated to prevent fainting", "Just as same as in real lifeee"]
+    howtoplay = font_info.render("How to play", True, (255, 255, 255))
 
-    WIN.blit(infomsg[0], (50, 100))
-    WIN.blit(infomsg[1], (50, 140))
+    infomsg = [font_info2.render(infomesgstrings[0], True, (255, 255, 255)), font_info2.render(infomesgstrings[1], True, (255, 255, 255)), font_info2.render(infomesgstrings[2], True, (255, 255, 255)), font_info2.render(infomesgstrings[3], True, (255, 255, 255)), font_info2.render(infomesgstrings[4], True, (255, 255, 255)), font_info2.render(infomesgstrings[5], True, (255, 255, 255)), font_info2.render(infomesgstrings[6], True, (255, 255, 255)), font_info2.render(infomesgstrings[7], True, (255, 255, 255)), font_info2.render(infomesgstrings[8], True, (255, 255, 255)),font_splash_credit.render("Press Enter to Play :)", True, (255, 255, 255))]
+
+    WIN.blit(howtoplay, (270, 5))
+    WIN.blit(infomsg[0], (50, 80))
+    WIN.blit(infomsg[1], (50, 120))
     WIN.blit(infomsg[2], (50, 180))
-    WIN.blit(water,(300, 300))
-    WIN.blit(infomsg[3], (340, 300))
-    WIN.blit(cola,(300, 350))
-    WIN.blit(infomsg[4], (340, 350))
-    WIN.blit(burger,(300, 400))
-    WIN.blit(infomsg[5], (340, 400))
-    WIN.blit(watermelon,(300, 450))
-    WIN.blit(infomsg[6], (340, 450))
-    WIN.blit(infomsg[7], (230, 550))
+    WIN.blit(infomsg[3], (50, 220))
+    WIN.blit(infomsg[4], (50, 280))
+    WIN.blit(infomsg[5], (180, 330))
+    WIN.blit(water, (80, 320))
+    WIN.blit(watermelon, (130, 330))
+    WIN.blit(infomsg[6], (180, 390))
+    WIN.blit(cola, (80, 390))
+    WIN.blit(burger, (130, 390))
+    WIN.blit(infomsg[7], (50, 450))
+    WIN.blit(infomsg[8], (200, 510))
+    WIN.blit(infomsg[9], (230, 620))
 
 
 #End Screen
@@ -67,7 +76,7 @@ font_end = py.font.Font('Resources/newfont.otf', 90)
 font_end2 = py.font.Font('Resources/newfont.otf', 48)
 font_end3 = py.font.Font('Resources/newfont.otf', 36)
 def end_screen():
-    endmsg = font_end.render("Game Over", True, (255, 255, 255))
+    endmsg = font_end.render("You Fainted", True, (255, 255, 255))
     WIN.blit(endmsg, (50, 100))
     scoremsg = font_end2.render("Your score: "+str(final_score), True, (255, 255, 255))
     WIN.blit(scoremsg, (400, 250))
@@ -87,36 +96,95 @@ def show_time():
 
 #Player
 class Player(py.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, picturepath):
         super().__init__()
         self.pos_X = 375
         self.pos_Y = 510
         self.vel = 0
-        
-    def update(self,vel,picture_path):
-        self.image = py.image.load(picture_path)
+        self.image = py.image.load(picturepath)
         self.rect = self.image.get_rect()
-        self.pos_X += vel
+        self.left_pressed=False
+        self.right_pressed=False
+        
+    def update(self,picture_path):
+        self.image = py.image.load(picture_path[1])
+        self.rect = self.image.get_rect()
+        self.vel = 0
+        if self.left_pressed and not self.right_pressed:
+            self.vel=-6
+            self.playerstate=0
+            self.image = py.image.load(picture_path[0])
+        if self.right_pressed and not self.left_pressed:
+            self.vel=6
+            self.playerstate=2
+            self.image = py.image.load(picture_path[2])
+        self.pos_X += self.vel
         if self.pos_X >= 730:
             self.pos_X = 730
         if self.pos_X <= 6:
             self.pos_X = 6
         self.rect.center = [self.pos_X, self.pos_Y]
         WIN.blit(self.image,(self.pos_X, self.pos_Y))
-hydro_key = 0
+
 vel_Player = 0
 Player_state = 1
 Players_picmap = ["Resources/manleft.png","Resources/man.png", "Resources/manright.png"]
-PlayerCenter = Player()
+PlayerCenter = Player("Resources/man.png")
 Player_group = py.sprite.Group
 Player_group.add(PlayerCenter)
 
-#Health_Bar  ##################################################
+#Helpers
+class Helpers(py.sprite.Sprite):
+    def __init__(self, picturepath):
+        super().__init__()
+        self.image = py.image.load(picturepath)
+        self.pos_X = random.randint(10,726)
+        self.pos_Y = random.randint(5,50)
+        self.vel = random.randint(1, 3)
+        self.rect = self.image.get_rect()
+    
+    def update(self):
+        self.pos_Y += self.vel
+        self.rect.center = [self.pos_X, self.pos_Y]
+        WIN.blit(self.image, (self.pos_X, self.pos_Y))
+        if self.pos_Y > 530:
+            return True
 
+    def collide(self, Playerrect):
+        return self.rect.colliderect(Playerrect)
+
+helpers = [Helpers("Resources/water.png"), Helpers("Resources/watermelon.png")]
+
+#Enemy
+class Enemy(py.sprite.Sprite):
+    def __init__(self, picturepath):
+        super().__init__()
+        self.image = py.image.load(picturepath)
+        self.pos_X = random.randint(10,726)
+        self.pos_Y = random.randint(5,50)
+        self.vel = random.randint(1, 4)
+        self.rect = self.image.get_rect()
+    
+    def update(self):
+        self.pos_Y += self.vel
+        self.rect.center = [self.pos_X, self.pos_Y]
+        WIN.blit(self.image, (self.pos_X, self.pos_Y))
+        if self.pos_Y > 530:
+            return True
+
+    def collide(self, Playerrect):
+        return self.rect.colliderect(Playerrect)
+
+enemies = [Enemy("Resources/cola.png"), Enemy("Resources/hamburger.png")]
+
+
+#Health_Bar
+
+hydro_key = 0
 class health_bar(py.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.current_health = 100
+        self.current_health = 200
         self.max_health = 200
         self.healthbar_length = 300
         self.health_ratio = self.max_health/self.healthbar_length
@@ -135,50 +203,18 @@ class health_bar(py.sprite.Sprite):
             self.current_health +=amount
         if self.current_health >=self.max_health:
             self.current_health = 200
+
     def basic_health(self):
-        py.draw.rect(WIN, (0,255,255),(10,650,self.current_health/self.health_ratio, 25))
-        py.draw.rect(WIN, (0,0,0),(10,650,self.healthbar_length, 25), 4)
+
+        py.draw.rect(WIN, (0,255,255),(10,650,self.current_health/self.health_ratio, 38))
+        py.draw.rect(WIN, (0,0,0),(10,650,self.healthbar_length, 38), 4)
+
+font_hydro = py.font.Font('Resources/newfont.otf', 32)
+hydrodisplay = font_hydro.render("HYDRATION", True, (0,0,0))
 
 hydrometer = health_bar()
 
 
-#Helpers
-class Helpers(py.sprite.Sprite):
-    def __init__(self, picturepath):
-        super().__init__()
-        self.image = py.image.load(picturepath)
-        self.pos_X = random.randint(10,726)
-        self.pos_Y = random.randint(5,50)
-        self.vel = random.randint(1, 4)
-    
-    def update(self):
-        self.rect = self.image.get_rect()
-        self.pos_Y += self.vel
-        WIN.blit(self.image, (self.pos_X, self.pos_Y))
-        if self.pos_Y > 530:
-            return True
-
-helpers = [Helpers("Resources/water.png"), Helpers("Resources/watermelon.png")]
-
-#Enemy
-class Enemy(py.sprite.Sprite):
-    def __init__(self, picturepath):
-        super().__init__()
-        self.image = py.image.load(picturepath)
-        self.pos_X = random.randint(10,726)
-        self.pos_Y = random.randint(5,50)
-        self.vel = random.randint(1, 4)
-    
-    def update(self):
-        self.rect = self.image.get_rect()
-        self.pos_Y += self.vel
-        WIN.blit(self.image, (self.pos_X, self.pos_Y))
-        if self.pos_Y > 530:
-            return True
-
-enemies = [Enemy("Resources/cola.png"), Enemy("Resources/hamburger.png")]
-
-hydrometer = health_bar()
 #Game Looping
 running = True
 while running:
@@ -188,12 +224,10 @@ while running:
 
         if event.type == py.KEYDOWN:
             if event.key == py.K_RIGHT:
-                Player_state = 2
-                vel_Player = 6.9
+                PlayerCenter.right_pressed=True
             
             if event.key == py.K_LEFT:
-                Player_state = 0
-                vel_Player = -6.9
+                PlayerCenter.left_pressed=True
 
             if event.key == py.K_RETURN:
                 if is_splashscreen == True:
@@ -207,32 +241,27 @@ while running:
                     current_time = time.time()
                     break
 
-                if is_mainscreen == True:
-                    is_mainscreen = False
-                    is_endscreen = True
-                    final_score = int(time.time()-current_time)
-                    break
-
                 if is_endscreen == True:
                     is_endscreen = False
                     is_infoscreen = True
                     break
-            #Hydrometer KeyDown
+        
+            if event.key == py.K_ESCAPE and is_endscreen == True:
+                running = False
+            
             if event.key == py.K_SPACE:
                 hydro_key=1
             if event.key == py.K_BACKSPACE:
                 hydro_key=2
-                
-                
-            if event.key == py.K_ESCAPE and is_endscreen == True:
-                running = False
-            
+
         if event.type == py.KEYUP:
-            if event.key == py.K_RIGHT or event.key == py.K_LEFT:
-                Player_state = 1
-                vel_Player = 0
+            if event.key == py.K_RIGHT: 
+                # Player_state = 1
+                PlayerCenter.right_pressed = False
+            if event.key == py.K_LEFT:
+                # Player_state = 1
+                PlayerCenter.left_pressed = False
             
-            #hydrometer KeyUP
             if event.key == py.K_BACKSPACE or event.key == py.K_SPACE: 
                 hydro_key = 0
     
@@ -248,42 +277,58 @@ while running:
         
 
     if is_mainscreen == True:
+        current_timestamp = int(time.time()-current_time)
+        if current_timestamp >= 57:
+            current_timestamp = 57
+
         WIN.blit(background_image,(0,0))
         WIN.blit(sun_image,(650, -80))
-        hydrometer.basic_health()   ## HYDROMETER CALL
-        if enemies[0].update():
+        hydrometer.basic_health() 
+        hydrometer.get_damage(0.001*current_timestamp)
+        if hydrometer.current_health <=0:
+            is_mainscreen = False
+            is_endscreen = True
+            final_score = int(time.time()-current_time)
+            hydrometer.current_health = 200
+            continue
+
+        if enemies[0].update() or enemies[0].collide(PlayerCenter.rect):
+            if enemies[0].collide(PlayerCenter.rect):
+                hydrometer.get_damage(5)
             enemies[0].pos_X = random.randint(10,726)
             enemies[0].pos_Y = random.randint(5,50)
-            enemies[0].vel = random.randint(1, 4)
+            enemies[0].vel = random.randint(1, 3)
 
-        if enemies[1].update():
+        if enemies[1].update() or enemies[1].collide(PlayerCenter.rect):
+            if enemies[1].collide(PlayerCenter.rect):
+                hydrometer.get_damage(5)
             enemies[1].pos_X = random.randint(10,726)
             enemies[1].pos_Y = random.randint(5,50)
-            enemies[1].vel = random.randint(1, 4)
+            enemies[1].vel = random.randint(1, 3)
 
-        if helpers[0].update():
+        if helpers[0].update() or helpers[0].collide(PlayerCenter.rect):
+            if helpers[0].collide(PlayerCenter.rect):
+                hydrometer.get_health(5)
             helpers[0].pos_X = random.randint(10,726)
             helpers[0].pos_Y = random.randint(5,50)
-            helpers[0].vel = random.randint(1, 4)
+            helpers[0].vel = random.randint(1, 3)
 
-        if helpers[1].update():
+        if helpers[1].update() or helpers[1].collide(PlayerCenter.rect):
+            if helpers[1].collide(PlayerCenter.rect):
+                hydrometer.get_health(5)
             helpers[1].pos_X = random.randint(10,726)
             helpers[1].pos_Y = random.randint(5,50)
-            helpers[1].vel = random.randint(1, 4)
+            helpers[1].vel = random.randint(1, 3)
         
-        PlayerCenter.update(vel_Player, Players_picmap[Player_state])
+        #ALSO PLAYER MOVEMENT SPEED
+        WIN.blit(hydrodisplay, (67, 650))
+
+        PlayerCenter.update(Players_picmap)
         show_time()
-        
-    #Hydrometer change call
-    if hydro_key == 1:
-        hydrometer.get_health(0.5)
-    if hydro_key == 2:
-        hydrometer.get_damage(0.5)
-    
+
     if is_endscreen == True:
         WIN.blit(backgroud_start_image, (0,0))
         end_screen()
-    
     
     clock.tick(120)
 
