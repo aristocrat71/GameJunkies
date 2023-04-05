@@ -1,6 +1,7 @@
 import pygame as py
 import random
 import time
+import ptext
 #current_time = time.time()
 
 
@@ -21,6 +22,10 @@ is_infoscreen = False
 is_mainscreen = False
 is_endscreen = False
 
+#########################################################################
+#EndTexts
+end_Texts = [["The human body is composed of approximately 60% water, making"," proper hydration essential for optimal health"],["Water helps regulate body temperature and maintain electrolyte"," balance"],["Dehydration can cause fatigue, headaches, and impaired cognitive ","function"],["Drinking enough water can help prevent constipation and promote ","regular bowel movements"],["Adequate hydration can help prevent kidney stones and urinary ","tract infections"],["Proper hydration can help prevent muscle cramps and improve ","physical performance"],["Drinking water can help control appetite and support weight loss ","efforts"],["Hydration can improve skin health and reduce the appearance of ","wrinkles"],["Drinking water can help reduce the risk of certain cancers, ","including colon and bladder cancer"], ["Proper hydration can help reduce the risk of heat stroke and ","other heat-related illnesses"],["Drinking water can help support immunesystem function and fight ","off infections"],["Hydration is important for heart health and can help reduce the ","risk of heart disease"],["Proper hydration can help improve sleep quality and duration"],["Drinking water can help alleviate symptoms of hangovers and ","prevent alcohol-related dehydration"],["Adequate hydration is important for athletes to maintain ","performance and prevent injury"],["Hydration can help improve mental clarity and concentration"],["Proper hydration can help reduce the risk of developing certain ","types of kidney disease"],["Drinking water can help reduce inflammation in the body, which ","is associated with various health issues"]]
+################################################################################
 
 #Backgrounds
 background_image = py.image.load("Resources/desert2.jpg")
@@ -46,10 +51,11 @@ water = py.image.load("Resources/water.png")
 watermelon = py.image.load("Resources/watermelon.png")
 burger = py.image.load("Resources/hamburger.png")
 cola = py.image.load("Resources/cola.png")
+
 def info_screen():
     infomesgstrings= ["You are roaming a desert", "You must survive as long as you can", "Stay Hydrated to Stay Alive", ": Waterbottle", ": Coke", ": Burger", ": Watermelon"]
     infomsg = [font_info.render(infomesgstrings[0], True, (255, 255, 255)), font_info.render(infomesgstrings[1], True, (255, 255, 255)), font_info.render(infomesgstrings[2], True, (255, 255, 255)), font_info2.render(infomesgstrings[3], True, (255, 255, 255)), font_info2.render(infomesgstrings[4], True, (255, 255, 255)), font_info2.render(infomesgstrings[5], True, (255, 255, 255)), font_info2.render(infomesgstrings[6], True, (255, 255, 255)), font_splash_credit.render("Press Enter to Play :)", True, (255, 255, 255))]
-
+    
     WIN.blit(infomsg[0], (50, 100))
     WIN.blit(infomsg[1], (50, 140))
     WIN.blit(infomsg[2], (50, 180))
@@ -68,11 +74,21 @@ def info_screen():
 font_end = py.font.Font('Resources/newfont.otf', 90)
 font_end2 = py.font.Font('Resources/newfont.otf', 48)
 font_end3 = py.font.Font('Resources/newfont.otf', 36)
+font_end4 = py.font.Font('Resources/newfont.otf',22)
 def end_screen():
     endmsg = font_end.render("Game Over", True, (255, 255, 255))
     WIN.blit(endmsg, (50, 100))
     scoremsg = font_end2.render("Your score: "+str(final_score), True, (255, 255, 255))
     WIN.blit(scoremsg, (400, 250))
+    #####################################################
+    #ptext.draw(end_Texts[end_Text_Index],(100,400))
+    endmsg=font_end4.render(end_Texts[end_Text_Index][0],True,(0,255,255))
+    WIN.blit(endmsg,(20,370))
+    if len(end_Texts[end_Text_Index])>1:
+        endmsg=font_end4.render(end_Texts[end_Text_Index][1],True,(0,255,255))
+        WIN.blit(endmsg,(20,403))
+
+    #####################################################
     retrymsg = font_end3.render("Press Enter to retry", True, (255, 255, 255))
     WIN.blit(retrymsg, (250, 550))
     gamequitmsg = font_end3.render("Press Esc to quit", True, (255, 255, 255))
@@ -264,6 +280,9 @@ while running:
     if is_infoscreen == True:
         WIN.blit(backgroud_start_image, (0,0))
         info_screen()
+        ##############################################
+        end_Text_Index=random.randint(0,17)
+        ##############################################
         
 
     if is_mainscreen == True:
@@ -274,7 +293,7 @@ while running:
         WIN.blit(background_image,(0,0))
         WIN.blit(sun_image,(650, -80))
         hydrometer.basic_health() 
-        hydrometer.get_damage(0.001*current_timestamp)
+        hydrometer.get_damage(0.001*current_timestamp*1000)
         if hydrometer.current_health <=0:
             is_mainscreen = False
             is_endscreen = True
