@@ -2,7 +2,9 @@ import pygame as py
 import random
 import time
 #current_time = time.time()
-##################################        DAY 2          #############################
+
+
+##################################        DAY 3          #############################
 
 py.init()
 
@@ -26,9 +28,15 @@ backgroud_start_image = py.image.load("Resources/desertmenu.jpg")
 sun_image = py.image.load("Resources/sun.png")
 
 
+#Sounds
+eatSound = py.mixer.Sound("Resources/eat.mp3")
+drinkSound = py.mixer.Sound("Resources/gulping.mp3")
+eatSound.set_volume(0.6)
+
+
 #SplashScreen
 font_splash_title = py.font.Font('Resources/newfont.otf', 90)
-font_splash_credit = py.font.Font('Resources/newfont.otf', 35)
+font_splash_credit = py.font.Font('Resources/newfont.otf', 36)
 def splash_screen():
     titlemsg1 = font_splash_title.render("Hydration Hero", True, (255, 255, 255))
     WIN.blit(titlemsg1, (50, 100))
@@ -38,28 +46,35 @@ def splash_screen():
     WIN.blit(titlemsg3, (250, 520))
 
 #InfoScreen
-font_info = py.font.Font('Resources/newfont.otf', 36)
-font_info2 = py.font.Font('Resources/newfont.otf', 28)
+
+font_info = py.font.Font('Resources/newfont.otf', 50)
+font_info2 = py.font.Font('Resources/newfont.otf', 30)
 water = py.image.load("Resources/water.png")
 watermelon = py.image.load("Resources/watermelon.png")
 burger = py.image.load("Resources/hamburger.png")
 cola = py.image.load("Resources/cola.png")
 def info_screen():
-    infomesgstrings= ["You are roaming a desert", "You must survive as long as you can", "Stay Hydrated to Stay Alive", ": Waterbottle", ": Coke", ": Burger", ": Watermelon"]
-    infomsg = [font_info.render(infomesgstrings[0], True, (255, 255, 255)), font_info.render(infomesgstrings[1], True, (255, 255, 255)), font_info.render(infomesgstrings[2], True, (255, 255, 255)), font_info2.render(infomesgstrings[3], True, (255, 255, 255)), font_info2.render(infomesgstrings[4], True, (255, 255, 255)), font_info2.render(infomesgstrings[5], True, (255, 255, 255)), font_info2.render(infomesgstrings[6], True, (255, 255, 255)), font_splash_credit.render("Press Enter to Play :)", True, (255, 255, 255))]
+    # infomesgstrings= ["You are roaming a desert", "You must survive as long as you can", "Stay Hydrated to Stay Alive", ": Waterbottle", ": Coke", ": Burger", ": Watermelon"]
+    infomesgstrings= ["You are roaming a desert", "You must survive as long as you can", "Press left right arrow to move", "---Jump ?---", "Collecting: ", "Helps you stay hydrated", "Will harm (dehydrate) your body", "Stay hydrated to prevent fainting", "Just as same as in real lifeee"]
+    howtoplay = font_info.render("How to play", True, (255, 255, 255))
 
-    WIN.blit(infomsg[0], (50, 100))
-    WIN.blit(infomsg[1], (50, 140))
+    infomsg = [font_info2.render(infomesgstrings[0], True, (255, 255, 255)), font_info2.render(infomesgstrings[1], True, (255, 255, 255)), font_info2.render(infomesgstrings[2], True, (255, 255, 255)), font_info2.render(infomesgstrings[3], True, (255, 255, 255)), font_info2.render(infomesgstrings[4], True, (255, 255, 255)), font_info2.render(infomesgstrings[5], True, (255, 255, 255)), font_info2.render(infomesgstrings[6], True, (255, 255, 255)), font_info2.render(infomesgstrings[7], True, (255, 255, 255)), font_info2.render(infomesgstrings[8], True, (255, 255, 255)),font_splash_credit.render("Press Enter to Play :)", True, (255, 255, 255))]
+
+    WIN.blit(howtoplay, (270, 5))
+    WIN.blit(infomsg[0], (50, 80))
+    WIN.blit(infomsg[1], (50, 120))
     WIN.blit(infomsg[2], (50, 180))
-    WIN.blit(water,(300, 300))
-    WIN.blit(infomsg[3], (340, 300))
-    WIN.blit(cola,(300, 350))
-    WIN.blit(infomsg[4], (340, 350))
-    WIN.blit(burger,(300, 400))
-    WIN.blit(infomsg[5], (340, 400))
-    WIN.blit(watermelon,(300, 450))
-    WIN.blit(infomsg[6], (340, 450))
-    WIN.blit(infomsg[7], (230, 550))
+    WIN.blit(infomsg[3], (50, 220))
+    WIN.blit(infomsg[4], (50, 280))
+    WIN.blit(infomsg[5], (180, 330))
+    WIN.blit(water, (80, 320))
+    WIN.blit(watermelon, (130, 330))
+    WIN.blit(infomsg[6], (180, 390))
+    WIN.blit(cola, (80, 390))
+    WIN.blit(burger, (130, 390))
+    WIN.blit(infomsg[7], (50, 450))
+    WIN.blit(infomsg[8], (200, 510))
+    WIN.blit(infomsg[9], (230, 620))
 
 
 #End Screen
@@ -67,7 +82,7 @@ font_end = py.font.Font('Resources/newfont.otf', 90)
 font_end2 = py.font.Font('Resources/newfont.otf', 48)
 font_end3 = py.font.Font('Resources/newfont.otf', 36)
 def end_screen():
-    endmsg = font_end.render("Game Over", True, (255, 255, 255))
+    endmsg = font_end.render("You Fainted", True, (255, 255, 255))
     WIN.blit(endmsg, (50, 100))
     scoremsg = font_end2.render("Your score: "+str(final_score), True, (255, 255, 255))
     WIN.blit(scoremsg, (400, 250))
@@ -94,11 +109,22 @@ class Player(py.sprite.Sprite):
         self.vel = 0
         self.image = py.image.load(picturepath)
         self.rect = self.image.get_rect()
+        self.left_pressed=False
+        self.right_pressed=False
         
-    def update(self,vel,picture_path):
-        self.image = py.image.load(picture_path)
+    def update(self,picture_path):
+        self.image = py.image.load(picture_path[1])
         self.rect = self.image.get_rect()
-        self.pos_X += vel
+        self.vel = 0
+        if self.left_pressed and not self.right_pressed:
+            self.vel=-6
+            self.playerstate=0
+            self.image = py.image.load(picture_path[0])
+        if self.right_pressed and not self.left_pressed:
+            self.vel=6
+            self.playerstate=2
+            self.image = py.image.load(picture_path[2])
+        self.pos_X += self.vel
         if self.pos_X >= 730:
             self.pos_X = 730
         if self.pos_X <= 6:
@@ -185,8 +211,12 @@ class health_bar(py.sprite.Sprite):
             self.current_health = 200
 
     def basic_health(self):
-        py.draw.rect(WIN, (0,255,255),(10,650,self.current_health/self.health_ratio, 25))
-        py.draw.rect(WIN, (0,0,0),(10,650,self.healthbar_length, 25), 4)
+
+        py.draw.rect(WIN, (0,255,255),(10,650,self.current_health/self.health_ratio, 38))
+        py.draw.rect(WIN, (0,0,0),(10,650,self.healthbar_length, 38), 4)
+
+font_hydro = py.font.Font('Resources/newfont.otf', 32)
+hydrodisplay = font_hydro.render("HYDRATION", True, (0,0,0))
 
 hydrometer = health_bar()
 
@@ -200,12 +230,10 @@ while running:
 
         if event.type == py.KEYDOWN:
             if event.key == py.K_RIGHT:
-                Player_state = 2
-                vel_Player = 6.9
+                PlayerCenter.right_pressed=True
             
             if event.key == py.K_LEFT:
-                Player_state = 0
-                vel_Player = -6.9
+                PlayerCenter.left_pressed=True
 
             if event.key == py.K_RETURN:
                 if is_splashscreen == True:
@@ -233,9 +261,12 @@ while running:
                 hydro_key=2
 
         if event.type == py.KEYUP:
-            if event.key == py.K_RIGHT or event.key == py.K_LEFT:
-                Player_state = 1
-                vel_Player = 0
+            if event.key == py.K_RIGHT: 
+                # Player_state = 1
+                PlayerCenter.right_pressed = False
+            if event.key == py.K_LEFT:
+                # Player_state = 1
+                PlayerCenter.left_pressed = False
             
             if event.key == py.K_BACKSPACE or event.key == py.K_SPACE: 
                 hydro_key = 0
@@ -266,8 +297,10 @@ while running:
             final_score = int(time.time()-current_time)
             hydrometer.current_health = 200
             continue
+
         if enemies[0].update() or enemies[0].collide(PlayerCenter.rect):
             if enemies[0].collide(PlayerCenter.rect):
+                drinkSound.play()
                 hydrometer.get_damage(5)
             enemies[0].pos_X = random.randint(10,726)
             enemies[0].pos_Y = random.randint(5,50)
@@ -275,6 +308,7 @@ while running:
 
         if enemies[1].update() or enemies[1].collide(PlayerCenter.rect):
             if enemies[1].collide(PlayerCenter.rect):
+                eatSound.play()
                 hydrometer.get_damage(5)
             enemies[1].pos_X = random.randint(10,726)
             enemies[1].pos_Y = random.randint(5,50)
@@ -282,6 +316,7 @@ while running:
 
         if helpers[0].update() or helpers[0].collide(PlayerCenter.rect):
             if helpers[0].collide(PlayerCenter.rect):
+                drinkSound.play()
                 hydrometer.get_health(5)
             helpers[0].pos_X = random.randint(10,726)
             helpers[0].pos_Y = random.randint(5,50)
@@ -289,18 +324,17 @@ while running:
 
         if helpers[1].update() or helpers[1].collide(PlayerCenter.rect):
             if helpers[1].collide(PlayerCenter.rect):
+                eatSound.play()
                 hydrometer.get_health(5)
             helpers[1].pos_X = random.randint(10,726)
             helpers[1].pos_Y = random.randint(5,50)
             helpers[1].vel = random.randint(1, 3)
         
-        PlayerCenter.update(vel_Player, Players_picmap[Player_state])
-        show_time()
+        #ALSO PLAYER MOVEMENT SPEED
+        WIN.blit(hydrodisplay, (67, 650))
 
-        # if hydro_key == 1:
-        #     hydrometer.get_health(0.5)
-        # if hydro_key == 2:
-        #     hydrometer.get_damage(0.5)
+        PlayerCenter.update(Players_picmap)
+        show_time()
 
     if is_endscreen == True:
         WIN.blit(backgroud_start_image, (0,0))
