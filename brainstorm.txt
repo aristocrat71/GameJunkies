@@ -8,9 +8,9 @@ KAAM KYA BACHA HAI
 
 DAY3 ka kaam?
 
-Movement refinement ----1
+Movement refinement ----1   DONE
 End Screen Facts ----3
-Info screen Object Description ----2
+Info screen Object Description ----2 DONE
 Runtime info facts splash ----3
 Describe healthbar somewhere ----3
 MUSIC ------2
