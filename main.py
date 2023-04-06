@@ -306,13 +306,14 @@ while running:
 
     if is_mainscreen == True:
         timestamp_main = int(time.time()-current_time)
-        if timestamp_main >= 60:
-            timestamp_main = 55
+        timestamp_sun = int(time.time()-current_time)
+        if timestamp_sun >= 60:
+            timestamp_sun = 55
 
         WIN.blit(background_image,(0,0))
         WIN.blit(sun_image,(650, -80))
         hydrometer.basic_health(warning_red) 
-        hydrometer.get_damage(0.001*timestamp_main)
+        hydrometer.get_damage(0.001*timestamp_sun)
 
         if hydrometer.current_health <= 75:
             WIN.blit(hydrodisplay_warn, (67, 630))
