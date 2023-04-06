@@ -8,11 +8,14 @@ KAAM KYA BACHA HAI
 
 DAY3 ka kaam?
 
-Movement refinement ----1
-End Screen Facts ----3
-Info screen Object Description ----2
-Runtime info facts splash ----3
-Describe healthbar somewhere ----3
-End Screen Facts ----3
+Movement refinement ----1 DONEEE
+End Screen Facts ----3 DONEEE
+Info screen Object Description ----2 DONEEE
+Describe healthbar somewhere ----3 DONEEE
+End Screen Facts ----3 DONEEE
+Music ---1 DONEEE
+
+Item drop SPEED DONEEE
+Runtime splash facts ?????????
 
 .exe ----4
