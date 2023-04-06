@@ -20,6 +20,7 @@ is_mainscreen = False
 is_endscreen = False
 
 
+
 #Backgrounds
 background_image = py.image.load("Resources/desert2.jpg")
 backgroud_start_image = py.image.load("Resources/desertmenu.jpg")
@@ -91,12 +92,23 @@ class Player(py.sprite.Sprite):
         super().__init__()
         self.pos_X = 375
         self.pos_Y = 510
-        self.vel = 0
         
-    def update(self,vel,picture_path):
-        self.image = py.image.load(picture_path)
+        self.left_pressed=False
+        self.right_pressed=False
+        
+    def update(self,picture_path):
+        self.image = py.image.load(picture_path[1])
         self.rect = self.image.get_rect()
-        self.pos_X += vel
+        self.vel = 0
+        if self.left_pressed and not self.right_pressed:
+            self.vel=-4
+            self.playerstate=0
+            self.image = py.image.load(picture_path[0])
+        if self.right_pressed and not self.left_pressed:
+            self.vel=4
+            self.playerstate=2
+            self.image = py.image.load(picture_path[2])
+        self.pos_X += self.vel
         if self.pos_X >= 730:
             self.pos_X = 730
         if self.pos_X <= 6:
@@ -157,12 +169,12 @@ while running:
 
         if event.type == py.KEYDOWN:
             if event.key == py.K_RIGHT:
-                Player_state = 2
-                vel_Player = 6.9
+                #Player_state = 2
+                PlayerCenter.right_pressed=True
             
             if event.key == py.K_LEFT:
-                Player_state = 0
-                vel_Player = -6.9
+                #Player_state = 0
+                PlayerCenter.left_pressed=True
 
             if event.key == py.K_RETURN:
                 if is_splashscreen == True:
@@ -191,9 +203,12 @@ while running:
                 running = False
             
         if event.type == py.KEYUP:
-            if event.key == py.K_RIGHT or event.key == py.K_LEFT:
-                Player_state = 1
-                vel_Player = 0
+            if event.key == py.K_RIGHT: 
+                # Player_state = 1
+                PlayerCenter.right_pressed = False
+            if event.key == py.K_LEFT:
+                # Player_state = 1
+                PlayerCenter.left_pressed = False
     
     py.display.flip()
 
@@ -230,13 +245,13 @@ while running:
             helpers[1].pos_Y = random.randint(5,50)
             helpers[1].vel = random.randint(1, 4)
         
-        PlayerCenter.update(vel_Player, Players_picmap[Player_state])
+        PlayerCenter.update( Players_picmap)
         show_time()
 
     if is_endscreen == True:
         WIN.blit(backgroud_start_image, (0,0))
         end_screen()
     
-    clock.tick(120)
+    clock.tick(60)
 
 py.quit()
