@@ -1,0 +1,22 @@
+Namaste !!
+A warm greeting from Team GameJunkies,
+
+We present you.... Hydration Hero !!
+
+A fun and creative game that aims at two things:
+ i) Entertainment and Reaction Building
+ii) To educate our audience on building healthy habits such as regular water intake, avoiding junk food.
+
+As you can observe we have attempted to combine the themes EdTech and HealthTech. We brainstormed a unique idea and put our heart and soul into implementing it using Python (Pygame library). 
+
+-- Our Plan Of Deliverance --
+
+We were prompted a few times with very important questions of HOW does this game solve the problem. If we are aiming at educating about healthy habits then how is it working ? Or is it even working ?
+
+Our game might actually be an efficient catalyst in doing so. Please note, catalyst. It prompts the player with text messages at different stages of the game.
+
+For example if I ask you to exercise one day and give you a motivation speech on it, you will be motivated to do it that day. You might even do it the next day. But after 3 or 4 days, there's a high chance you might QUIT.
+What if there is another method, which has a higher chance of retaining it's effect on the person ?
+Our game works on the principal of "Repetitive Subtle Reminders". As the name suggests it works by repetitively reminding the person of the habit but by subtle signs and messages. This slowly creates a subconsious response towards the message in the person, which slowly urges him/her to do it. Another big factor called "Motivation" is also resolved since it is a GAME ! Nobody needs motivation to play a simple endless themed game.
+
+Therefore, our game works by going slow and steady which is much more effective in building a habit instead of making haste and starting big from day one itself.
